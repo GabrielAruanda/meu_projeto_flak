@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Encurtador de URL</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+
+<body>
+    <header>
+        <div class="site-name">
+            <h1>Encurtador de URL</h1>
+        </div>
+    </header>
+    <main>
+        <div class="container">
+            <form method="POST" action="{{ url_for('index') }}">
+                <label for="long_url">URL Longa:</label>
+                <input type="text" id="long_url" name="long_url" required>
+                <button type="submit">Encurtar</button>
+            </form>
+            {% if urls %}
+            <div class="result">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>URL Longa</th>
+                            <th>URL Curta</th>
+                            <th>Cliques</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for url in urls %}
+                        <tr>
+                            <td>{{ url[0] }}</td>
+                            <td><a href="{{ url_for('redirect_to_url', short_url=url[1]) }}" target="_blank">{{ url[1] }}</a></td>
+                            <td>{{ url[2] }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            {% endif %}
+        </div>
+    </main>
+</body>
+
+</html>
